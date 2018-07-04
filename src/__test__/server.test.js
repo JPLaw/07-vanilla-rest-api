@@ -13,9 +13,9 @@ describe('VALID request to the API', () => {
   describe('GET api/time', () => {
     it('should response with a status 200', (done) => {
       superagent.get(`${apiUrl}/time`)
-        .then((res) => {
-          expect(res.status).toEqual(200);
-          expect(res.body).toHaveProperty('date');
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.body).toHaveProperty('date');
           done();
         });
     });
@@ -27,9 +27,9 @@ describe('VALID request to the API', () => {
     it('should respond with status 200 and return cow HTML', () => {
       return superagent.get(`${apiUrl}/cowsayPage`)
         .query({ text: 'Howdy Partner' })
-        .then((res) => {
-          expect(res.status).toEqual(200);
-          expect(res.text).toEqual(mockHtml);
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.text).toEqual(mockHtml);
         });
     });
   });
@@ -38,12 +38,12 @@ describe('VALID request to the API', () => {
     it('should return status 200 for successful post', () => {
       return superagent.post(`${apiUrl}/echo`)
         .send({ name: 'jenny' })
-        .then((res) => {
-          expect(res.body.name).toEqual('jenny');
-          expect(res.status).toEqual(200);
+        .then((response) => {
+          expect(response.body.name).toEqual('jenny');
+          expect(response.status).toEqual(200);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          console.log(error);
         });
     });
   });
@@ -54,9 +54,9 @@ describe('INVALID request to the API', () => {
     it('should err out with 400 status code for not sending text in query', () => {
       return superagent.get(`${apiUrl}/cowsayPage`)
         .query({})
-        .catch((err) => {
-          expect(err.status).toEqual(400);
-          expect(err).toBeTruthy();
+        .catch((error) => {
+          expect(error.status).toEqual(400);
+          expect(error).toBeTruthy();
         });
     });
   });
