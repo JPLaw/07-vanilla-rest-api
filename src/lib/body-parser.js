@@ -24,12 +24,12 @@ module.exports = function bodyParse(request) {
       try {
         request.body = JSON.parse(message);
         return resolve(request);
-      } catch (err) {
-        return reject(err);
+      } catch (error) {
+        return reject(error);
       }
     });
 
-    request.on('error', err => reject(err));
+    request.on('error', error => reject(error));
     return undefined;
   });
 };

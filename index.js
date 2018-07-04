@@ -10,4 +10,4 @@ if (process.env.NODE_ENV !== 'production') {
   require('babel-register');
 }
 
-require('./main');
+require('./src/main');
