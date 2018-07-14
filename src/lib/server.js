@@ -3,7 +3,7 @@
 const http = require('http');
 const cowsay = require('cowsay');
 const bodyParser = require('./body-parser.js');
-// const faker = require('faker');
+const faker = require('faker'); //eslint-disable-line
 
 const server = module.exports = {};
 
@@ -50,7 +50,7 @@ const app = http.createServer((request, response) => {
       if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/api/cowsay') {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         const cowsayText = cowsay.say({
-          text: parsedRequest.url.query.text,
+          text: parsedRequest.url.query.text || faker.name.findName(),
         });
         response.write(JSON.stringify({
           content: cowsayText,
@@ -59,10 +59,10 @@ const app = http.createServer((request, response) => {
         return undefined;
       }
 
-      if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/cowsay') {
+      if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/api/cowsayPage') {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         const cowsayText = cowsay.say({
-          text: parsedRequest.url.query.text,
+          text: parsedRequest.url.query.text || faker.name.findName(),
         });
         response.write(`<section><h3><a href="time">Click here for current time</a></h3><pre>${cowsayText}</pre></section>`);
         response.end();
