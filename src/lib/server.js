@@ -1,38 +1,39 @@
 'use strict';
 
-const server = module.exports = {};
-
 const http = require('http');
 const cowsay = require('cowsay');
 const bodyParser = require('./body-parser.js');
 // const faker = require('faker');
 
-// const server = module.exports = {};
+const server = module.exports = {};
+
+const cowsayPage = 
+`<!DOCTYPE html>
+          <html>
+            <head>
+              <title> cowsay </title>
+            </head>
+            <body>
+             <header>
+               <nav>
+                 <ul>
+                   <li><a href="/api/cowsay">cowsay</a></li>
+                 </ul>
+               </nav>
+             <header>
+             <main>
+               Building HTTP Server
+             </main>
+            </body>
+          </html>
+          `;
 
 const app = http.createServer((request, response) => {
   bodyParser(request)
     .then((parsedRequest) => {
       if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/') {
         response.writeHead(200, { 'Content-Type': 'text/html' });
-        response.write(`<!DOCTYPE html>
-        <html>
-          <head>
-            <title> cowsay </title>
-          </head>
-          <body>
-           <header>
-             <nav>
-               <ul>
-                 <li><a href="/api/cowsayPage?text=Moo!">What does the cow say?</a></li>
-               </ul>
-             </nav>
-           <header>
-           <main>
-             <p>Welcome to Cowsay. Moooooooooo</p>
-           </main>
-          </body>
-        </html>
-        ;`);
+        response.write(cowsayPage);
         response.end();
         return undefined;
       }
@@ -47,7 +48,7 @@ const app = http.createServer((request, response) => {
       }
 
       if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/api/cowsay') {
-        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.writeHead(200, { 'Content-Type': 'text/html' });
         const cowsayText = cowsay.say({
           text: parsedRequest.url.query.text,
         });
@@ -58,7 +59,7 @@ const app = http.createServer((request, response) => {
         return undefined;
       }
 
-      if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/api/cowsay') {
+      if (parsedRequest.method === 'GET' && parsedRequest.url.pathname === '/cowsay') {
         response.writeHead(200, { 'Content-Type': 'text/html' });
         const cowsayText = cowsay.say({
           text: parsedRequest.url.query.text,

@@ -2,7 +2,7 @@
 
 const server = require('../lib/server');
 const superagent = require('superagent');
-const cowsay = require('cowsay');
+// const cowsay = require('cowsay');
 
 const apiUrl = 'http://localhost:5000/api';
 
@@ -21,18 +21,18 @@ describe('VALID request to the API', () => {
     });
   });
 
-  describe('GET /cowsayPage', () => {
-    const mockCow = cowsay.say({ text: 'Howdy Partner' });
-    const mockHtml = `<section><h3><a href="api/time">Click here for current time</a></h3><pre>${mockCow}</pre></section>`;
-    it('should respond with status 200 and return cow HTML', () => {
-      return superagent.get(`${apiUrl}/cowsayPage`)
-        .query({ text: 'Howdy Partner' })
-        .then((response) => {
-          expect(response.status).toEqual(200);
-          expect(response.text).toEqual(mockHtml);
-        });
-    });
-  });
+  // describe('GET /cowsay', () => {
+  //   const mockCow = cowsay.say({ text: 'Howdy Partner' });
+  //   const mockHtml = `<section><h3><a href="api/time">Click here for current time</a></h3><pre>${mockCow}</pre></section>`; 
+  //   it('should respond with status 200 and return cow HTML', () => {
+  //     return superagent.get(`${apiUrl}/cowsay`)
+  //       .query({ text: 'Howdy Partner' })
+  //       .then((response) => {
+  //         expect(response.status).toEqual(200);
+  //         expect(response.text).toEqual(mockHtml);
+  //       });
+  //   });
+  // });
 
   describe('POST /echo', () => {
     it('should return status 200 for successful post', () => {
@@ -52,7 +52,7 @@ describe('VALID request to the API', () => {
 describe('INVALID request to the API', () => {
   describe('GET /cowsayPage', () => {
     it('should err out with 400 status code for not sending text in query', () => {
-      return superagent.get(`${apiUrl}/cowsayPage`)
+      return superagent.get(`${apiUrl}/cowsay`)
         .query({})
         .catch((error) => {
           expect(error.status).toEqual(400);
